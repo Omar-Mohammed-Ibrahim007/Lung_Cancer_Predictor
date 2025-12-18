@@ -166,11 +166,12 @@
 <section>
     <h2> Preprocessing Pipeline</h2>
     <ul>
-        <li>Numerical imputation using median</li>
+        <li>Data imputation using drop method to remove missing data </li>
         <li>Categorical encoding:
             <ul>
                 <li>OrdinalEncoder for ordered features</li>
                 <li>One-Hot Encoding for nominal features</li>
+                <li>LabelEncoder for binary features</li>
             </ul>
         </li>
         <li>StandardScaler for numerical normalization</li>
