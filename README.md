@@ -199,8 +199,8 @@
     <table>
         <tr>
             <th>Model</th>
-            <th>Default Accuracy</th>
             <th>Tuned Accuracy</th>
+            <th>Default Accuracy</th>
         </tr>
         <tr>
             <td>Logistic Regression</td>
