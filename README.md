@@ -153,9 +153,9 @@
 </section>
 
 <section>
-    <h2>🧪 Dataset Characteristics</h2>
+    <h2> Dataset Characteristics</h2>
     <ul>
-        <li>20,000 synthetic patient records</li>
+        <li>25,000 synthetic patient records</li>
         <li>Balanced target classes (Yes / No)</li>
         <li>10% missing values</li>
         <li>2% injected outliers</li>
@@ -164,7 +164,7 @@
 </section>
 
 <section>
-    <h2>⚙️ Preprocessing Pipeline</h2>
+    <h2> Preprocessing Pipeline</h2>
     <ul>
         <li>Numerical imputation using median</li>
         <li>Categorical encoding:
@@ -204,23 +204,23 @@
         </tr>
         <tr>
             <td>Logistic Regression</td>
-            <td>0.81</td>
-            <td>0.85</td>
+            <td>0.937340</td>
+            <td>0.938039</td>
         </tr>
         <tr>
             <td>Random Forest</td>
-            <td>0.86</td>
-            <td>0.90</td>
+            <td>0.919870</td>
+            <td>0.910086</td>
         </tr>
         <tr>
             <td>XGBoost</td>
-            <td>0.88</td>
-            <td>0.92</td>
+            <td>0.928255</td>
+            <td>0.922199</td>
         </tr>
         <tr>
             <td>LightGBM</td>
-            <td>0.87</td>
-            <td>0.91</td>
+            <td>0.928022</td>
+            <td>0.928488</td>
         </tr>
     </table>
 </section>
