@@ -1,225 +1,257 @@
-# Lung Cancer Risk Prediction System
-
-A comprehensive Machine Learning–based Lung Cancer Risk Prediction System built using synthetic yet realistic healthcare data, advanced preprocessing, multiple classification models, and rigorous hyperparameter tuning with GridSearchCV.
-The project includes a fully interactive Streamlit web application for real-time prediction using pretrained models.
-
-## Project Overview
-
-Lung cancer remains one of the leading causes of cancer-related deaths worldwide. Early risk assessment can significantly improve patient outcomes.
-
-This project aims to:
-
-Simulate realistic clinical and lifestyle data
-
-Train and compare multiple ML models
-
-Reduce overfitting through proper feature engineering and tuning
-
-Deploy a user-friendly Streamlit web app for prediction
-
-## Objectives
-
-Generate a balanced, realistic dataset with missing values and outliers
-
-Apply robust preprocessing (encoding, scaling, handling noise)
-
-Train multiple ML classifiers
-
-Perform mandatory hyperparameter tuning using GridSearchCV
-
-Compare models before and after tuning
-
-Deploy predictions via an interactive web interface
-
-## Machine Learning Models Used
-
-Logistic Regression
-
-K-Nearest Neighbors (KNN)
-
-Decision Tree
-
-Random Forest
-
-Extra Trees
-
-XGBoost
-
-LightGBM
-
-Naive Bayes variants
-
-Each model was trained using:
-
-Default hyperparameters
-
-Tuned hyperparameters (GridSearchCV)
-
-## Dataset Description
-
-The dataset is synthetically generated to resemble real-world lung cancer data while avoiding privacy issues.
-
-Features Include:
-
-Demographics (Age, Gender, Country)
-
-Lifestyle factors (Smoking, Tobacco Use, Indoor Smoking)
-
-Environmental exposure (Air Pollution, Occupational Exposure)
-
-Clinical indicators (Cancer Stage, Mutation Type, Treatment)
-
-Risk indicators (Mortality Risk, 5-Year Survival Probability)
-
-Target Variable:
-
-Final_Prediction → Yes / No (lung cancer risk)
-
-✔ Balanced class distribution
-✔ Missing values (~10%)
-✔ Outliers (~2%)
-✔ Label noise for realism
-
-## Data Preprocessing Pipeline
-
-Missing Values Handling
-
-Numerical: Median imputation
-
-Categorical: Mode / probability-based fill
-
-Outlier Treatment
-
-IQR-based filtering for numerical features
-
-Encoding Strategy
-
-OrdinalEncoder → ordered features (e.g., cancer stage)
-
-One-Hot Encoding → nominal features
-
-Feature Scaling
-
-StandardScaler (trained on training set only)
-
-All preprocessing artifacts are saved and reused during inference.
-
-## Hyperparameter Tuning (Mandatory)
-
-Hyperparameter tuning was performed using GridSearchCV for every model (default parameters were not allowed).
-
-Why GridSearchCV?
-
-Prevents overfitting
-
-Ensures fair model comparison
-
-Selects best model based on validation performance, not training accuracy
-
-Tuned Hyperparameters Include:
-
-Regularization strength (C)
-
-Tree depth (max_depth)
-
-Number of estimators (n_estimators)
-
-Learning rate (learning_rate)
-
-Number of neighbors (k)
-
-Feature randomness (max_features)
-
-## Model Selection Criteria
-
-Final model versions were selected based on:
-
-Validation accuracy
-
-Reduced overfitting
-
-Stability between training and validation scores
-
-Cross-validation consistency
-
-## Performance Comparison
-Model	Default Accuracy	Tuned Accuracy
-Logistic Regression	~0.81	~0.85
-Random Forest	~0.86	~0.90
-XGBoost	~0.88	~0.92
-LightGBM	~0.87	~0.91
-
-✔ All models showed improvement after tuning
-✔ Ensemble models performed best
-
-## Feature Importance & Interpretability
-
-Logistic Regression coefficients analyzed
-
-Odds Ratios calculated for interpretability
-
-Feature importance visualizations included
-
-This ensures model transparency, especially critical for healthcare-related predictions.
-
-## Streamlit Web Application
-
-An interactive web app allows users to:
-
-Select a pretrained model
-
-Input patient data via sidebar
-
-Perform real-time prediction
-
-View risk probability and final decision
-
-## Features:
-
-Cached models and encoders
-
-Proper feature alignment
-
-Safe handling of unseen inputs
-
-Clean UI and responsive layout
-
-📁 Project Structure
-├── data/
-│   └── synthetic_cancer_data.csv
-├── models/
-│   ├── lr.pkl
-│   ├── rf.pkl
-│   ├── xgb.pkl
-│   └── lgb.pkl
-├── encoders/
-│   ├── ordinal_encoder.pkl
-│   └── label_encoder.pkl
-├── scaler.pkl
-├── features.txt
-├── app.py
-├── training_notebook.ipynb
-└── README.md
-
- Disclaimer
-
-This project is for academic and research purposes only.
-It is not a medical diagnostic tool and should not be used for real clinical decisions.
-
- Author
-
-Omar Mohammad
-Computer Science Student 
-
- Final Notes
-
-This project demonstrates:
-
-Strong understanding of ML pipelines
-
-Proper evaluation methodology
-
-Realistic data simulation
-
-Professional deployment practices
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lung Cancer Risk Prediction System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c7be5, #00b4d8);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        }
+
+        section h2 {
+            border-left: 5px solid #2c7be5;
+            padding-left: 12px;
+            margin-top: 0;
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #2c7be5;
+            color: white;
+        }
+
+        code {
+            background-color: #eef1f6;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        pre {
+            background-color: #1e1e2f;
+            color: #dcdcdc;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1e1e2f;
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #e3f2fd;
+            color: #1565c0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 4px 4px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1> Lung Cancer Risk Prediction System</h1>
+    <p>Machine Learning–Based Healthcare Risk Assessment with Streamlit Deployment</p>
+</header>
+
+<div class="container">
+
+<section>
+    <h2> Project Overview</h2>
+    <p>
+        This project implements a complete Machine Learning pipeline for predicting lung cancer risk
+        using a <strong>synthetic yet medically realistic dataset</strong>. It covers data generation,
+        preprocessing, model training, hyperparameter tuning, evaluation, and deployment via a
+        Streamlit web application.
+    </p>
+</section>
+
+<section>
+    <h2> Objectives</h2>
+    <ul>
+        <li>Generate realistic healthcare data with missing values and outliers</li>
+        <li>Apply robust preprocessing and feature engineering</li>
+        <li>Train and tune multiple classification models</li>
+        <li>Prevent overfitting through validation-based selection</li>
+        <li>Deploy predictions using an interactive web interface</li>
+    </ul>
+</section>
+
+<section>
+    <h2> Models Used</h2>
+    <div class="tag">Logistic Regression</div>
+    <div class="tag">KNN</div>
+    <div class="tag">Decision Tree</div>
+    <div class="tag">Random Forest</div>
+    <div class="tag">Extra Trees</div>
+    <div class="tag">XGBoost</div>
+    <div class="tag">LightGBM</div>
+    <div class="tag">Naive Bayes</div>
+</section>
+
+<section>
+    <h2>🧪 Dataset Characteristics</h2>
+    <ul>
+        <li>20,000 synthetic patient records</li>
+        <li>Balanced target classes (Yes / No)</li>
+        <li>10% missing values</li>
+        <li>2% injected outliers</li>
+        <li>Label noise for realism</li>
+    </ul>
+</section>
+
+<section>
+    <h2>⚙️ Preprocessing Pipeline</h2>
+    <ul>
+        <li>Numerical imputation using median</li>
+        <li>Categorical encoding:
+            <ul>
+                <li>OrdinalEncoder for ordered features</li>
+                <li>One-Hot Encoding for nominal features</li>
+            </ul>
+        </li>
+        <li>StandardScaler for numerical normalization</li>
+        <li>All encoders and scalers saved and reused</li>
+    </ul>
+</section>
+
+<section>
+    <h2> Hyperparameter Tuning</h2>
+    <p>
+        GridSearchCV was applied to every model to optimize hyperparameters that control:
+    </p>
+    <ul>
+        <li>Model complexity</li>
+        <li>Bias–variance trade-off</li>
+        <li>Overfitting and underfitting</li>
+    </ul>
+    <p>
+        Final models were selected based on <strong>validation performance</strong>,
+        not training accuracy.
+    </p>
+</section>
+
+<section>
+    <h2> Performance Comparison</h2>
+    <table>
+        <tr>
+            <th>Model</th>
+            <th>Default Accuracy</th>
+            <th>Tuned Accuracy</th>
+        </tr>
+        <tr>
+            <td>Logistic Regression</td>
+            <td>0.81</td>
+            <td>0.85</td>
+        </tr>
+        <tr>
+            <td>Random Forest</td>
+            <td>0.86</td>
+            <td>0.90</td>
+        </tr>
+        <tr>
+            <td>XGBoost</td>
+            <td>0.88</td>
+            <td>0.92</td>
+        </tr>
+        <tr>
+            <td>LightGBM</td>
+            <td>0.87</td>
+            <td>0.91</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2> Streamlit Web Application</h2>
+    <ul>
+        <li>Sidebar-based patient input</li>
+        <li>Model selection dropdown</li>
+        <li>Risk probability output</li>
+        <li>Clean UI with cached models</li>
+    </ul>
+
+    <pre><code>streamlit run app.py</code></pre>
+</section>
+
+<section>
+    <h2> Disclaimer</h2>
+    <p>
+        This project is for academic and research purposes only.
+        It is <strong>not</strong> intended for real-world medical diagnosis.
+    </p>
+</section>
+
+
+
+</div>
+
+<footer>
+    © 2025 Lung Cancer Prediction Project • Machine Learning & Streamlit Deployment
+</footer>
+
+</body>
+</html>
