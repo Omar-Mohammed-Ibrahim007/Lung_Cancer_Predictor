@@ -155,10 +155,11 @@
 <section>
     <h2> Dataset Characteristics</h2>
     <ul>
-        <li>25,000 synthetic patient records</li>
+        <li>40,000 synthetic patient records</li>
         <li>Balanced target classes (Yes / No)</li>
         <li>10% missing values</li>
         <li>2% injected outliers</li>
+        <li>Some noise to add reality</li>
         <li>Label noise for realism</li>
     </ul>
 </section>
@@ -196,7 +197,8 @@
 </section>
 
 <section>
-    <h2> Performance Comparison</h2>
+    <h2> We Choose Best Parameters Based on (Avoiding Overfitting,Higher Validation Accuracy)</h2>
+    <h2> Performance Comparison 'Validation Accuracy In NoteBook!'</h2>
     <table>
         <tr>
             <th>Model</th>
@@ -205,23 +207,23 @@
         </tr>
         <tr>
             <td>Logistic Regression</td>
-            <td>0.937340</td>
-            <td>0.938039</td>
+            <td>0.857981</td>
+            <td>0.857894</td>
         </tr>
         <tr>
             <td>Random Forest</td>
-            <td>0.919870</td>
-            <td>0.910086</td>
+            <td>0.879538</td>
+            <td>0.998793</td>
         </tr>
         <tr>
             <td>XGBoost</td>
-            <td>0.928255</td>
-            <td>0.922199</td>
+            <td>0.868500</td>
+            <td>0.907045</td>
         </tr>
         <tr>
             <td>LightGBM</td>
-            <td>0.928022</td>
-            <td>0.928488</td>
+            <td>0.871346</td>
+            <td>0.871260</td>
         </tr>
     </table>
 </section>
