@@ -159,7 +159,6 @@
         <li>Balanced target classes (Yes / No)</li>
         <li>10% missing values</li>
         <li>2% injected outliers</li>
-        <li>Some noise to add reality</li>
         <li>Label noise for realism</li>
     </ul>
 </section>
