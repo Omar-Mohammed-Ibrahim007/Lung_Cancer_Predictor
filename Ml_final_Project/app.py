@@ -61,14 +61,28 @@ scaler,ordinalencoder, labelencoder,dummies_cols, models, features = load_artifa
 #---------------------------------------------------
 # Models Menu – Model Selection
 #---------------------------------------------------
+abbreviations={
+
+"Logistic Regression":'lr',
+"Gaussian Naive Bayes":'gnb',
+"Multinomial Naive Bayes":'mnb',
+"Complement Naive Bayes":'cnb',
+"Bernoulli Naive Bayes":'bnb',
+"K Nearest Neighbors":'knn',
+"Random Forest":'rf',
+"Decision Tree":'dt',
+"Extra Trees":'et',
+"XGBoost":'xgb',
+"LightGMB":'lgb' 
+}
 st.sidebar.title("Model Selection")
 
 model_choice = st.sidebar.selectbox(
     "Choose ML Model",
-    list(models.keys())
+    list(abbreviations.keys())
 )
 
-model = models[model_choice]
+model = models[abbreviations[model_choice]]
 
 #---------------------------------------------------
 # Patient Menus – Patient Inputs
@@ -87,7 +101,7 @@ Smoking_Status = st.sidebar.selectbox(
 Second_Hand_Smoke = st.sidebar.selectbox("Second Hand Smoke", ["Yes", "No"])
 Air_Pollution = st.sidebar.selectbox("Air Pollution Exposure", ["Low", "Medium", "High"])
 Occupational_Exposure = st.sidebar.selectbox("Occupational Exposure", ["Yes", "No"])
-Rural_or_Urban = st.sidebar.selectbox("Rural_or_Urban ", ["Yes", "No"])
+Rural_or_Urban = st.sidebar.selectbox("Rural_or_Urban ", ['Rural','Urban'])
 Socioeconomic_Status = st.sidebar.selectbox("Socioeconomic Status", ["Low", "Middle", "High"])
 Healthcare_Access = st.sidebar.selectbox("Healthcare Access", ["Poor", "Limited", "Good"])
 Insurance = st.sidebar.selectbox("Health Insurance", ["Yes", "No"])
