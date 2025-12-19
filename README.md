@@ -237,7 +237,10 @@
         <li>Clean UI with cached models</li>
     </ul>
 
-    <pre><code>streamlit run app.py</code></pre>
+    <pre>
+    <code>cd .\ML_final_Project</code>
+    <code>streamlit run .\app.py</code>
+    </pre>
 </section>
 
 <section>
